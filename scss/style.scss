@@ -1,0 +1,151 @@
+$cellColor: rgb(0, 103, 137);
+$newCellColor: lighten($cellColor,40%);
+$primaryFont: "Exo",Arial,sans-serif;
+
+:root {
+  --cellColor: $cellColor;
+  --newCellColor: $newCellColor;
+}
+
+body {
+  font-family: $primaryFont;
+  background: #000000;
+}
+#title {
+  text-align: center;
+  font-size: 2.75rem;
+  background: #FFFFFF;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-radius: 10px;
+}
+
+#evolutionTitle {
+  font: 1rem $primaryFont;
+}
+#evolution {
+  font: 1.5rem $primaryFont;
+  text-align: center;
+}
+
+#colorDisplay {
+  background: #3adb76;
+  display:block;
+  padding: 2px 2px 4px 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+#colorDisplay2 {
+  background: #cc4b37;
+  display: block;
+  color: #FFFFFF;
+  padding: 2px 2px 4px 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+#speedDisplay {
+  display:block;
+  background: #ffae00;
+  padding: 2px 2px 4px 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  
+}
+#densityDisplay {
+  display:block;
+  background: #767676;
+  padding: 2px 2px 4px 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  color: #FFFFFF;
+}
+#ben {
+  font: 1.5rem $primaryFont;
+  display: block;
+  text-align: center;
+  border-radius: 10px;
+  padding: 2px;
+  margin-top: 15px;
+}
+table{
+  border-collapse: collapse;
+  height: 85vh;
+  width: 85vh;
+  margin: 10px auto;
+  .cell {
+    border: 1px solid #000000;
+  }
+}
+.alive {
+  background: var(--newCellColor);
+  animation: newborn 1s linear 0s 1 normal forwards;
+}
+@keyframes newborn {
+  0%{background: var(--newCellColor);}
+  100%{background: var(--cellColor);}
+}
+.dead {
+  background: #F2F2F2;
+}
+
+//CONTROL PANELS
+#controlPanel {
+position: absolute;
+left: 10px;
+top: 10px;
+width: 25vw;
+background: #FFFFFF;
+height: 85vh;
+padding: 10px;
+border: 1px solid;
+border-radius: 10px;
+  .slider-handle{
+    background: var(--cellColor);
+  }
+}
+
+#controlPanel2 {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 25vw;
+  height: 85vh;
+  background: #FFFFFF;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 10px;
+  button,a{
+    font-family: $primaryFont;
+    border-radius: 10px;
+  }
+  #aliveDisplay {
+    font: 2rem $primaryFont;
+  }
+  #aliveCells {
+    font: 3rem $primaryFont;
+    border: 1px solid;
+    border-radius: 10px;
+    text-align: center;
+  }
+  #sizeDisplay{
+    font: 2rem $primaryFont;
+  }
+}
+//ATTEMPTING TO STACK CONTENT ON TABLETS AND BELOW
+@media (max-width: 900px) {
+  #appWrapper{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  #controlPanel,#controlPanel2,#title {
+    width: 100vw;
+    position: inherit;
+  }
+}
+//REVEAL AKA MODAL
+#docs {
+  height: 80vh;
+  width: 80vw;
+  font-family: $primaryFont;
+}

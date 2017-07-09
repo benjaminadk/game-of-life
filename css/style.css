@@ -1,0 +1,182 @@
+:root {
+  --cellColor: #006789;
+  --newCellColor: #56d5ff;
+}
+
+body {
+  font-family: "Exo", Arial, sans-serif;
+  background: #000000;
+}
+
+#title {
+  text-align: center;
+  font-size: 2.75rem;
+  background: #FFFFFF;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-radius: 10px;
+}
+
+#evolutionTitle {
+  font: 1rem "Exo", Arial, sans-serif;
+}
+
+#evolution {
+  font: 1.5rem "Exo", Arial, sans-serif;
+  text-align: center;
+}
+
+#colorDisplay {
+  background: #3adb76;
+  display: block;
+  padding: 2px 2px 4px 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+
+#colorDisplay2 {
+  background: #cc4b37;
+  display: block;
+  color: #FFFFFF;
+  padding: 2px 2px 4px 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+
+#speedDisplay {
+  display: block;
+  background: #ffae00;
+  padding: 2px 2px 4px 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+
+#densityDisplay {
+  display: block;
+  background: #767676;
+  padding: 2px 2px 4px 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  color: #FFFFFF;
+}
+
+#ben {
+  font: 1.5rem "Exo", Arial, sans-serif;
+  display: block;
+  text-align: center;
+  border-radius: 10px;
+  padding: 2px;
+  margin-top: 15px;
+}
+
+table {
+  border-collapse: collapse;
+  height: 85vh;
+  width: 85vh;
+  margin: 10px auto;
+}
+table .cell {
+  border: 1px solid #000000;
+}
+
+.alive {
+  background: var(--newCellColor);
+  -webkit-animation: newborn 1s linear 0s 1 normal forwards;
+          animation: newborn 1s linear 0s 1 normal forwards;
+}
+
+@-webkit-keyframes newborn {
+  0% {
+    background: var(--newCellColor);
+  }
+  100% {
+    background: var(--cellColor);
+  }
+}
+
+@keyframes newborn {
+  0% {
+    background: var(--newCellColor);
+  }
+  100% {
+    background: var(--cellColor);
+  }
+}
+.dead {
+  background: #F2F2F2;
+}
+
+#controlPanel {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 25vw;
+  background: #FFFFFF;
+  height: 85vh;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+#controlPanel .slider-handle {
+  background: var(--cellColor);
+}
+
+#controlPanel2 {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 25vw;
+  height: 85vh;
+  background: #FFFFFF;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+#controlPanel2 button, #controlPanel2 a {
+  font-family: "Exo", Arial, sans-serif;
+  border-radius: 10px;
+  outline: none;
+}
+#controlPanel2 #aliveDisplay {
+  font: 2rem "Exo", Arial, sans-serif;
+}
+#controlPanel2 #aliveCells {
+  font: 3rem "Exo", Arial, sans-serif;
+  border: 1px solid;
+  border-radius: 10px;
+  text-align: center;
+}
+#controlPanel2 #sizeDisplay {
+  font: 2rem "Exo", Arial, sans-serif;
+}
+
+@media (max-width: 900px) {
+  #appWrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -ms-flex-pack: distribute;
+        justify-content: space-between;
+  }
+
+  #controlPanel, #controlPanel2, #title {
+    width: 100vw;
+    position: inherit;
+    height:100%;
+  }
+  #title {
+    align-self: flex-end;
+  }
+  #controlPanel{
+    height:100%;
+  }
+}
+#docs {
+  height: 80vh;
+  width: 80vw;
+  font-family: "Exo", Arial, sans-serif;
+}

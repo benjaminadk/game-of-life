@@ -1,0 +1,409 @@
+class Reveal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false
+    }
+  }
+  //MANUALLY CLOSING MODAL
+  closeModal(){
+    $("#docs").foundation("close");
+  }
+  componentDidMount(){
+    
+    var options = {
+      animationIn: "spinIn",
+      animationOut: "spinOut"
+    }
+    var reveal = new Foundation.Reveal($("#docs"), options);
+  }
+  
+  render(){
+    return(
+      
+    <div className="reveal" id="docs" data-reveal>
+  <h4>GAME OF LIFE</h4>
+  <p>The Game of Life was created in 1970 by an English Mathmetician, John Horton.  It simulates LIFE to a certain degree.  The game outcome is always determined by the game's initial state, or simply, the way the cells are arranged.  There are a few basic rules that govern the game.  This set of rules is applied to the board as a whole on each Evolution.</p>
+  <h4>Cells Are Evaluated Based On Eight Neighboring Cells</h4>
+        <ul>
+          <li>RULE 1 - Any Cell with fewer than two neighbors dies.  Lonliness/Underpopulation</li>
+          <li>RULE 2 - Any Cell with two or three neighbors lives on to the next generation</li>
+          <li>RULE 3 - Any Cell with over three neighbors dies.  Overpopulation</li>
+          <li>RULE 4 - Any Dead Cell with exactly three neighbors becomes Alive.  Reproduction</li>
+        </ul>
+        <h4>FEATURES</h4>
+        <p>Point and Click Cell Highlighting - Set the board any way you want and run your own Game of Life Evolution Instance</p>
+        <p>Save a Configuration and Print it Later - Save your experiment in case it turns out cool. Clicking all those Cells is tedious.  Simply save before you Start your Instance and you can reuse your board multiple times.</p>
+        <p>Three Cell Sizes -  Towards the bottom of the button side controls panel there are Small, Medium and Large option buttons.  These correspond to 25x25, 50x50 and 100x100 Cell Grids. While Game of Life is stopped/paused simply click a size button and the board will change.  Those familiar with React may chose to open the source files where you can alter the state of App.state.rows/columns to any number you wish.</p>
+        <p>Choose Cell Color - Mature Live Cells as well as New Live Cells.  These values may be changed at any time with the color pickers in the slider side controls.</p>
+        <p>Set Probability of Cell being born alive with the <code>LIFE FACTOR</code> slider.  A process goes on behind the scenes to create Cells before each Instance of Game of Life.  This input give Cells an 1 in <code>INPUT</code> chance of being alive on initiation.</p>
+        <p><code>START BUTTON</code> begins an Instance of Game of Life</p>
+        <p><code>STOP BUTTON</code> pauses an Instance of Game of Life</p>
+        <p><code>CLEAR BUTTON</code> erases the enitre board and ends the Instance of Game of Life</p>
+        <p><code>RESET BUTTON</code> ends an Instance of Game of Life and generates a new random board on every press</p>
+        <p><code>LARGE BUTTON</code> sets Cell size to 25x25</p>
+        <p><code>MEDIUM BUTTON</code> sets Cell size to 50x50</p>
+        <p><code>SMALL BUTTON</code> sets Cell size to 100x100</p>
+        <p><code>SAVE BUTTON</code> saves the current board configuration for future use(Session Only)</p>
+        <p><code>PRINT BUTTON</code> prints saved board configuation to Game of Life - now you can review it!</p>
+        <p><code>DOCS BUTTON</code> opens this documentation page</p>
+        <p><code>NEW CELL COLOR</code> sets color for Cells 1 second and younger</p>
+        <p><code>MATURE CELL COLOR</code> sets color for Cells older than 1 second</p>
+        <p><code>SPEED FACTOR</code> sets time between Evolutions 0.1s thru 1s</p>
+        <p><code>LIFE FACTOR</code> sets probability of cell being alive on instanciation</p>
+        <p><code>EVOLUTIONS</code> displays number of Evolutions that have taken place since instanciation</p>
+        <p><code>LIVE CELLS</code> displays the current number of living Cells on the board</p>
+  <button className="close-button" data-close aria-label="Close modal" type="button" onClick={this.closeModal}>
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+      
+    );
+  }
+}
+const Header = (props) => {
+  return(
+  <header>
+      <p id='title'><i className="devicon-sass-original"></i>
+John Conway's Game Of Life<i className="devicon-react-original-wordmark"></i></p>
+
+      </header>
+  );
+}
+class ControlPanel2 extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+ 
+  render() {
+    return(
+      
+    <div id="controlPanel2">
+        <button type="button" className="success button expanded" onClick={this.props.start}>START</button>
+        <button type="button" className="alert button expanded" onClick={this.props.stop}>STOP</button>
+        <button type="button" className="warning button expanded" onClick={this.props.clear}>CLEAR</button>
+        <button type="button" className="secondary button expanded" onClick={this.props.reset}>RESET</button>
+        <p id="aliveDisplay">LIVE CELLS | <span id="evolutionTitle">EVOLUTIONS</span></p>
+        <p id="aliveCells">{document.getElementsByClassName("alive").length} | <span id="evolution">{this.props.evolution}</span></p>
+       
+        <p id="sizeDisplay">CELL SIZE</p>
+        <div className="button-group">  
+  <a className="button" onClick={this.props.changeLarge}>LARGE</a>
+  <a className="button" onClick={this.props.changeMedium}>MEDIUM</a>
+  <a className="button" onClick={this.props.changeSmall}>SMALL</a>
+</div>
+        <p id="extraDisplay">EXTRAS</p>
+        <div className="button-group">  
+  <a className="button" onClick={this.props.save}>SAVE</a>
+  <a className="button" onClick={this.props.print}>PRINT</a>
+  <button className="button" data-open="docs">DOCS</button>
+</div>
+       
+        </div>
+      
+    
+    );
+  }
+}
+
+class ControlPanel extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+componentDidMount(){
+  //INIT SLIDER FOR SPEED STATE
+  var options = {
+    initialStart: 3,
+    step: 1,
+    start: 1,
+    end: 10
+  }
+  var slider1 = new Foundation.Slider($("#speedSet"), options);
+ //INIT SLIDER FOR RANDOM DENSITY STATE
+  var options2 = {
+    initialStart: 5,
+    step: 1,
+    start: 1,
+    end: 10
+  }
+  var slider2 = new Foundation.Slider($("#densitySet"), options2);
+  
+}
+  render() {
+    return (
+      <div id="controlPanel">
+      
+        <span id="colorDisplay">MATURE CELL COLOR
+          <input type="color" id="color" /></span>
+         <span id="colorDisplay2">NEWBORN CELL COLOR
+          <input type="color" id="color2" /></span>
+       
+        <span id="speedDisplay">SPEED FACTOR</span>
+        <div className="row column">
+  <div className="slider" id="speedSet" data-slider>
+    <span className="slider-handle"  data-slider-handle role="slider" aria-controls="sliderOutput1"onClick={this.props.changeSpeed}></span>
+    <span className="slider-fill" data-slider-fill onClick={this.props.changeSpeed}></span>
+  </div>
+</div>
+<div className="row column">
+  <input type="number" id="sliderOutput1" onClick={this.props.changeSpeed}/>
+</div>
+        <span id="densityDisplay">LIFE FACTOR</span>
+               <div className="row column">
+  <div className="slider" id="densitySet" data-slider>
+    <span className="slider-handle"  data-slider-handle role="slider" aria-controls="sliderOutput2"onClick={this.props.changeDensity}></span>
+    <span className="slider-fill" data-slider-fill onClick={this.props.changeDensity}></span>
+  </div>
+</div>
+<div className="row column">
+  <input type="number" id="sliderOutput2" onClick={this.props.changeDensity}/>
+</div>
+        <span className="label info" id="ben">with<i className="devicon-react-original-wordmark"></i>
+by @benjaminadk </span>
+  
+        </div>
+    );
+  }
+}
+class Cell extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+    <td id={this.props.row + ":" + this.props.column} className={this.props.alive === true ? 'alive cell' : 'dead cell'}></td>
+    );
+  }
+}
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      rows: 50,
+      columns: 50,
+      board: [],
+      number: 5,
+      speed: 3,
+      evolution: 0,
+      savedBoard: []
+    };
+    this.makeCell = this.makeCell.bind(this);
+    this.makeRow = this.makeRow.bind(this);
+    this.makeGrid = this.makeGrid.bind(this);
+    this.makeBoard = this.makeBoard.bind(this);
+    this.toggleLife = this.toggleLife.bind(this);
+    this.godFunction = this.godFunction.bind(this);
+    this.start = this.start.bind(this);
+    this.stop = this.stop.bind(this);
+    this.clear = this.clear.bind(this);
+    this.reset = this.reset.bind(this);
+    this.evolve = this.evolve.bind(this);
+    this.changeSpeed = this.changeSpeed.bind(this);
+    this.changeDensity = this.changeDensity.bind(this);
+    this.changeSmall = this.changeSmall.bind(this);
+    this.changeMedium = this.changeMedium.bind(this);
+    this.changeLarge = this.changeLarge.bind(this);
+    this.save = this.save.bind(this);
+    this.print = this.print.bind(this);
+    
+  }
+  
+  //MAKES RANDOM GRID WHEN PAGE LOADS
+   componentDidMount() {
+    this.setState({ 
+      board: this.makeGrid()
+    });
+   }
+  // DETERMINES IF A CELL IS DEAD OR ALIVE RANDOMLY
+  // CELL WILL HAVE A ONE IS STATE.NUMBER CHANCE OF BEING ALIVE ON INIT
+  // I THINK :)
+  makeCell() {
+    let status = Math.floor((Math.random() * this.state.number)) + 1 === this.state.number ? true: false;
+    return status;
+  }
+  //MAKES AN ARRAY OF CELLS - BASED ON STATE.COLUMNS
+  //EACH ROW NEEDS A CELL FOR EVERY COLUMN
+  makeRow() {
+    let row = [];
+    for (let i = 0; i < this.state.columns; i++) {
+      row.push(this.makeCell());
+    }
+    return row;
+  }
+  //MAKES AN ARRAY OF ARRAYS - BASED ON STATE.ROWS
+  //EACH ROW NEEDS AN ARRAY OF CELLS
+  makeGrid() {
+    let grid = [];
+    for (let i = 0; i < this.state.rows; i++) {
+      grid.push(this.makeRow());
+    }
+    return grid;
+  }
+  // TAKES GRID AND MAKES A CELL COMPONENT FOR EVERY CELL
+  makeBoard(grid) {
+    let output = [];
+    for (let i = 0; i < grid.length; i++) {
+      let row = [];
+      for (let j = 0; j < grid[i].length; j++) {
+        row.push(<Cell row={i} column={j} alive={grid[i][j] === true ? true: false} />);
+      }
+      output.push(<tr>{row}</tr>);
+    }
+    return output;
+  }
+  //TOGGLES CELL LIFE STATUS SO USER CAN INTERACT WITH BOARD
+  toggleLife(e) {
+     let xy = e.target.id.split(":");
+    let newBoard = this.state.board;
+    newBoard[xy[0]][xy[1]] = !newBoard[xy[0]][xy[1]];
+    this.setState({ board: newBoard });
+  }
+  //APPLIES CONWAY'S RULES FOR CELL BIRTH/DEATH
+  godFunction(grid) {
+    return grid.map( (row,rowIndex) => {
+      return row.map( (cell,cellIndex) => {
+        let magicNum = 0;
+        let rowAbove = rowIndex === 0 ? this.state.rows - 1 : rowIndex - 1;
+        let rowBelow = rowIndex === this.state.rows - 1 ? 0 : rowIndex + 1;
+        let prevCell = cellIndex === 0 ? this.state.columns - 1 : cellIndex - 1;
+        let nextCell = cellIndex === this.state.columns - 1 ? 0 : cellIndex + 1;
+        if(grid[rowAbove][prevCell]===true){magicNum++}
+        if(grid[rowAbove][cellIndex]===true){magicNum++}
+        if(grid[rowAbove][nextCell]===true){magicNum++}
+        if(grid[rowIndex][prevCell]===true){magicNum++}
+        if(grid[rowIndex][nextCell]===true){magicNum++}
+        if(grid[rowBelow][prevCell]===true){magicNum++}
+        if(grid[rowBelow][cellIndex]===true){magicNum++}
+        if(grid[rowBelow][nextCell]===true){magicNum++}
+        if(cell===true && (magicNum===2 || magicNum===3)){
+          return true;
+        }
+        else if(cell===false && magicNum===3){
+          return true;
+        }
+        else{
+          return false;
+        }
+      });
+    });
+  }
+    //TIMER THAT RUNS EACH EVOLUTION OF BOARD
+  evolve(){
+    this.setState({
+      evolution: this.state.evolution + 1,
+      board: this.godFunction(this.state.board)
+    });
+  }
+  //WHEN USERS CLICK START BUTTON - STARTS EVOLUTIONS
+  start(){
+    clearTimeout(this.timer);
+    this.timer = setInterval(this.evolve, this.state.speed * 100);
+  }
+  //WHEN USER CLICK STOP BUTTON - STOPS EVOLUTIONS
+  stop(){
+    clearTimeout(this.timer);
+  }
+  //WHEN USER CLICK CLEAR - CLEARS BOARD
+  clear(){
+    clearTimeout(this.timer);
+    let blankBoard = this.state.board.map( el => {return el.map( elem => {return false; } ); } );
+    this.setState({
+      board: blankBoard,
+      evolution: 0
+    });
+  }
+  //WHEN USER CLICK RESET TO RANDOM BOARD
+  reset(){
+    clearTimeout(this.timer);
+        this.setState({
+      board: this.makeGrid()
+    });
+  }
+  //SLIDER FOR SPEED VARIABLE RANGE FROM .1s TO 1s PER EVOLUTION
+  changeSpeed(){
+    let speed = $("#sliderOutput1")[0].valueAsNumber;
+    this.setState({
+      speed: speed
+    });
+    setTimeout(console.log(this.state.speed),500);
+  }
+  //SLIDER FOR DENSITY OF CELLS - CELL AS ONE IN VALUE CHANCE OF LIFE ON INIT
+  changeDensity(){
+    let number = $("#sliderOutput2")[0].valueAsNumber;
+    this.setState({
+      number: number
+    });
+    setTimeout(console.log(this.state.number),500);
+  }
+  //ATTEMPTING BOARD SIZE FUNCTIONS
+  changeSmall(){
+    this.setState({
+      rows: 100,
+      columns: 100
+    });
+  setTimeout(this.reset,1000);}
+  changeMedium(){
+    this.setState({
+      rows: 50,
+      columns: 50
+    });
+  setTimeout(this.reset,1000);}
+  changeLarge(){
+    this.setState({
+      rows: 25,
+      columns: 25
+    });
+  setTimeout(this.reset,1000);}
+   
+  save(){
+    this.setState({
+      savedBoard: this.state.board
+    });
+    alert("Board Saved For This Session! Use Print to Load Your Saved Board Configuraton");
+  }
+  print(){
+    this.setState({
+      board: this.state.savedBoard
+    });
+  }
+  render() {
+    return(
+      <div id="appWrapper">
+       <Reveal/>
+     <table className="gameBoard" onClick={this.toggleLife}>
+          {this.makeBoard(this.state.board)}
+        </table>
+        <ControlPanel changeSpeed={this.changeSpeed.bind(this)}
+                      changeDensity={this.changeDensity.bind(this)} />              
+                     
+        <ControlPanel2 start={this.start.bind(this)}
+                       stop={this.stop.bind(this)}
+                       clear={this.clear.bind(this)}
+                       reset={this.reset.bind(this)}
+                       save={this.save.bind(this)}
+                       print={this.print.bind(this)}
+                       evolution={this.state.evolution}
+                       changeSmall={this.changeSmall.bind(this)}
+                       changeMedium={this.changeMedium.bind(this)}
+                       changeLarge={this.changeLarge.bind(this)}/>
+         <Header/>
+        </div>
+    );
+  }
+}
+
+
+ReactDOM.render(<App/>,document.getElementById("app"));
+
+var color = document.getElementById("color");
+color.addEventListener("change",function(){
+  document.documentElement.style.setProperty("--cellColor",color.value);
+});
+var color2 = document.getElementById("color2");
+color.addEventListener("change",function(){
+  document.documentElement.style.setProperty("--newCellColor",color2.value);
+});
+
+
+
