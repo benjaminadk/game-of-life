@@ -7,6 +7,6 @@
 - Foundation
 
 ## Video Describing Game
-[![game overview](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
+[![game overview](http://img.youtube.com/vi/3ydJBLwXWTY/0.jpg)](http://www.youtube.com/watch?v=3ydJBLwXWTY)
 ## Video Talking About Code
-[![code overview](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
+[![code overview](http://img.youtube.com/vi/8GlF_AbXW04/0.jpg)](http://www.youtube.com/watch?v=8GlF_AbXW04)
